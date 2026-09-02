@@ -1,0 +1,20 @@
+Hi{{nameComma}}
+
+I recently applied for the {{title}} role at {{company}} and wanted to reach out directly.
+
+I'm Harsh Dubey, an AI Engineer and full-stack developer in Bengaluru, currently at EMO Energy building production LLM and IoT-connected apps on GCP. A few highlights:
+
+- Built Padho AI, a GenAI adaptive learning platform with 1K+ concurrent users, 95% voice transcription accuracy (Deepgram), and real-time voice agents via Vapi AI
+- Custom LLM fine-tuning pipelines, RAG architectures, and GPT-4/Gemini integrations across multiple production apps
+- Cross-platform features end to end (React Native, Next.js, TypeScript)
+
+Resume: https://drive.google.com/file/d/1WhSde5dMgalOMNVY8vnvD5y57rhBTkXw/view
+Portfolio: https://v0-harsh-dubey-portfolio.vercel.app/
+GitHub: github.com/harshuCodes-git
+LinkedIn: linkedin.com/in/harsharundubey
+
+Would love to be considered for the {{title}} position, or any AI/ML or full-stack role that fits. Happy to share more or jump on a quick call.
+
+Best,
+Harsh Dubey
++91 90961 98302

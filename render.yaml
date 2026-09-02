@@ -1,0 +1,39 @@
+# One free web service. Scheduling is external (cron-job.org -> POST /poll).
+# Set the sync:false secrets in the Render dashboard after the first deploy.
+services:
+  - type: web
+    name: job-apply-automation
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_FROM_NAME
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REFRESH_TOKEN
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: google/gemini-2.5-flash
+      - key: SHEET_API
+        sync: false
+      - key: POLL_SECRET
+        generateValue: true
+      - key: POLL_LOOKBACK_DAYS
+        value: "2"
+      - key: MAX_PER_POLL
+        value: "10"
+      - key: SEND_DELAY_MS
+        value: "2000"
+      - key: MIN_CONFIDENCE
+        value: "0.6"
+      - key: PROCESS_BOUNCES
+        value: "true"
