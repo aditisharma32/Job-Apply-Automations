@@ -15,23 +15,113 @@ const HTML = fs.readFileSync(path.join(__dirname, '..', 'templates', 'email.html
 const TEXT = fs.readFileSync(path.join(__dirname, '..', 'templates', 'email.txt'), 'utf8');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Confirmation-email senders/subjects to look for. EXTRA_SENDERS can bolt on more.
+// Confirmation-email senders/subjects to look for. EXTRA_SENDERS (env) can bolt
+// on more without touching this file — one-off senders specific to a single
+// account belong there, not here.
+//
+// Subject terms are AND-of-keywords rather than exact phrases: Gmail's
+// subject:"..." matches a literal contiguous phrase, so "Your application has
+// been received!" would NOT match subject:"application received" (the words
+// aren't adjacent). Keyword groups like (subject:application subject:received)
+// match regardless of word order/adjacency, which is what lets this generalize
+// across ATSes without hardcoding every platform's exact subject wording. The
+// LLM classifier downstream (extract.js) is the real filter against false
+// positives, so casting a wide net here is safe.
 const BASE_TERMS = [
-  'subject:"your application was sent"',
-  'subject:"application was sent to"',
-  'subject:"we received your application"',
-  'subject:"thank you for applying"',
-  'subject:"thanks for applying"',
-  'subject:"application received"',
+  '(subject:application subject:sent)',
+  '(subject:application subject:received)',
+  '(subject:application subject:submitted)',
+  '(subject:application subject:confirmation)',
+  '(subject:application subject:confirmed)',
+  '(subject:application subject:acknowledged)',
+  '(subject:application subject:status)',
+  '(subject:application subject:process)',
+  '(subject:application subject:review)',
+  '(subject:application subject:successful)',
+  '(subject:successfully subject:applied)',
+  '(subject:candidacy subject:received)',
+  '(subject:candidature subject:received)',
+  '(subject:thank subject:applying)',
+  '(subject:thanks subject:applying)',
+  '(subject:thank subject:application)',
+  '(subject:thanks subject:application)',
+  '(subject:thank subject:interest)',
   'subject:"your application to"',
-  'subject:"application submitted"',
+
+  // LinkedIn
   'from:jobs-noreply@linkedin.com',
   'from:jobs-listings@linkedin.com',
+  // Greenhouse / Lever
   'from:no-reply@greenhouse.io',
-  'from:no-reply@us.greenhouse-mail.io',
+  'from:@greenhouse-mail.io',
   'from:no-reply@hire.lever.co',
+  // Indian job boards
   'from:notifications@naukri.com',
+  'from:@internshala.com',
+  'from:@instahyre.com',
+  'from:@foundit.in',
+  'from:@monsterindia.com',
+  'from:@shine.com',
+  'from:@cutshort.io',
+  'from:@hirist.com',
+  'from:@timesjobs.com',
+  'from:@freshersworld.com',
+  'from:@naukrigulf.com',
+  // Global / US job boards
   'from:noreply@indeed.com',
+  'from:@wellfound.com',
+  'from:@angel.co',
+  'from:@glassdoor.com',
+  'from:@monster.com',
+  'from:@ziprecruiter.com',
+  'from:@simplyhired.com',
+  'from:@dice.com',
+  'from:@careerbuilder.com',
+  'from:@builtin.com',
+  'from:@otta.com',
+  'from:@hired.com',
+  'from:@joinhandshake.com',
+  'from:@wayup.com',
+  'from:@flexjobs.com',
+  'from:@remoteok.com',
+  'from:@weworkremotely.com',
+  // European / other regional job boards
+  'from:@stepstone.com',
+  'from:@xing.com',
+  'from:@reed.co.uk',
+  'from:@totaljobs.com',
+  'from:@cv-library.co.uk',
+  'from:@seek.com.au',
+  // Direct company career sites (ATS platforms)
+  'from:@myworkday.com',
+  'from:@smartrecruiters.com',
+  'from:@ashbyhq.com',
+  'from:@workable.com',
+  'from:@icims.com',
+  'from:@bamboohr.com',
+  'from:@jobvite.com',
+  'from:@taleo.net',
+  'from:@successfactors.com',
+  'from:@zohorecruit.com',
+  'from:@freshteam.com',
+  'from:@breezy.hr',
+  'from:@recruitee.com',
+  'from:@personio.de',
+  'from:@teamtailor.com',
+  'from:@jazzhr.com',
+  'from:@applytojob.com',
+  'from:@recruiterbox.com',
+  'from:@applicantstack.com',
+  'from:@bullhorn.com',
+  'from:@jobdiva.com',
+  'from:@avature.net',
+  'from:@phenompeople.com',
+  'from:@eightfold.ai',
+  'from:@comeet.com',
+  'from:@vidcruiter.com',
+  'from:@pinpointhq.com',
+  'from:@cornerstoneondemand.com',
+  'from:@oraclecloud.com',
 ];
 
 function buildQuery() {
@@ -105,7 +195,7 @@ async function runPoll(opts = {}) {
     }
   }
 
-  const ids = await gmailApi.listMessages(buildQuery(), 100);
+  const ids = await gmailApi.listMessages(buildQuery(), 200);
   summary.found = ids.length;
 
   let processed = 0;
