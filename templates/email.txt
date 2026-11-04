@@ -4,7 +4,7 @@ I hope you're doing well.
 
 I'm a Software Development Engineer with 2+ years of experience building scalable backend APIs, full-stack applications, and AI-powered systems.
 
-My key skills include Python, FastAPI, Node.js, React.js, TypeScript, PostgreSQL, MongoDB, Redis, AWS, Docker, LLMs, RAG, and LangGraph.
+My key skills include Python, FastAPI, Node.js, Express.js, React.js, TypeScript, PostgreSQL, MongoDB, Redis, AWS, Docker, WebSockets, Pipecat, LangChain, LangGraph, RAG, LLMs, and Java Spring Boot.
 
 I've built production Voice AI systems using Amazon Bedrock and Pipecat, achieving under 500 ms response time.
 
