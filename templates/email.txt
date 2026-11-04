@@ -10,7 +10,7 @@ I've built production Voice AI systems using Amazon Bedrock and Pipecat, achievi
 
 I recently applied for the {{title}} role and would love to explore SDE-1, Backend, or Full-Stack opportunities at {{company}}. I'm available to join immediately.
 
-Resume: https://drive.google.com/file/d/1iUU4ZzYFAwxTLmaS-LKZm2cCayx5xM6N/view
+Resume: https://drive.google.com/file/d/11yBrqEek8TL3GjcIpkUlzurcoYq9JIhH/view?usp=sharing
 LinkedIn: https://www.linkedin.com/in/aditi-sharma-dev/
 GitHub: https://github.com/aditisharma32
 
