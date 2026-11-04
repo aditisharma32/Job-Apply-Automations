@@ -254,8 +254,8 @@ async function runPoll(opts = {}) {
     }
 
     const subject = render(config.subjectTemplate, { title: info.jobTitle, company: info.company });
-    const html = render(HTML, { title: info.jobTitle, company: info.company });
-    const text = render(TEXT, { title: info.jobTitle, company: info.company });
+    const html = render(HTML, { title: info.jobTitle, company: info.company, name: resolved.name });
+    const text = render(TEXT, { title: info.jobTitle, company: info.company, name: resolved.name });
 
     // Track within the run so a second email for the same company (e.g.
     // "DigiCert" and "DigiCert, Inc.") is deduped in both dry and real runs.

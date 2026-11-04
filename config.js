@@ -72,6 +72,12 @@ const config = {
     bounceLookbackDays: int('BOUNCE_LOOKBACK_DAYS', 3),
   },
 
+  finder: {
+    hunterApiKey: opt('HUNTER_API_KEY'),
+    apolloApiKey: opt('APOLLO_API_KEY'),
+    fallbackToGuess: bool('FALLBACK_TO_GUESS', true),
+  },
+
   subjectTemplate:
     opt('EMAIL_SUBJECT', 'Following up on my application for {{title}} at {{company}}'),
 };
