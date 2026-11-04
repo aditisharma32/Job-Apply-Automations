@@ -6,7 +6,9 @@ I'm a Software Development Engineer with 2+ years of experience building scalabl
 
 My key skills include Python, FastAPI, Node.js, Express.js, React.js, TypeScript, PostgreSQL, MongoDB, Redis, AWS, Docker, WebSockets, Pipecat, LangChain, LangGraph, RAG, LLMs, and Java Spring Boot.
 
-I've built production Voice AI systems using Amazon Bedrock and Pipecat, achieving under 500 ms response time.
+I've built production-grade Voice AI systems using Amazon Bedrock and Pipecat, achieving under 500 ms response time.
+
+I also have a strong foundation in Data Structures and Algorithms, having solved 1,000+ problems across coding platforms, with a LeetCode rating of 1805 (Top 7%), CodeChef 3-Star, and Codeforces Pupil.
 
 I recently applied for the {{title}} role and would love to explore SDE-1, Backend, or Full-Stack opportunities at {{company}}. I'm available to join immediately.
 
