@@ -1,10 +1,11 @@
 'use strict';
 
 // Works out an address to contact for a company:
-//   1. First tries real email finder APIs (Hunter.io or Apollo.io) if configured
+//   1. First tries real email finder APIs (Hunter.io, Apollo.io, or Tomba.io) if configured
 //      to find an actual Technical Recruiter / Talent Acquisition person.
 //   2. If a recruiter is found, returns their real email and first name.
-//   3. Falls back to hr@<domain> only if FALLBACK_TO_GUESS is enabled.
+//   3. Falls back to smart applicant prefix (e.g., careers@<domain> or hr@<domain>)
+//      only if FALLBACK_TO_GUESS is enabled.
 const config = require('../config');
 const { hasMx } = require('./verifyDomain');
 
@@ -45,7 +46,6 @@ async function searchHunter(domain) {
     const emails = json?.data?.emails || [];
 
     if (!emails.length) {
-      // If HR department is empty, check general domain emails
       const genUrl = `https://api.hunter.io/v2/domain-search?domain=${encodeURIComponent(domain)}&api_key=${config.finder.hunterApiKey}&limit=10`;
       const genRes = await fetch(genUrl, { signal: AbortSignal.timeout(8000) });
       if (genRes.ok) {
@@ -65,7 +65,6 @@ async function searchHunter(domain) {
       return null;
     }
 
-    // Prioritize recruitment / talent titles
     const best =
       emails.find((e) => /recruit|talent|hire|hiring/i.test(e.position || '')) ||
       emails[0];
@@ -118,6 +117,39 @@ async function searchApollo(domain) {
 }
 
 /**
+ * Searches Tomba.io for a recruiter/talent contact at the domain.
+ */
+async function searchTomba(domain) {
+  if (!config.finder.tombaKey || !config.finder.tombaSecret) return null;
+  try {
+    const url = `https://api.tomba.io/v1/domain-search?domain=${encodeURIComponent(domain)}&department=human_resources`;
+    const res = await fetch(url, {
+      headers: {
+        'X-Tomba-Key': config.finder.tombaKey,
+        'X-Tomba-Secret': config.finder.tombaSecret,
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    const emails = json?.data?.emails || [];
+    const best =
+      emails.find((e) => /recruit|talent|hire|hiring/i.test(e.position || '')) ||
+      emails[0];
+    if (best && best.email) {
+      return {
+        email: best.email,
+        name: best.first_name || null,
+        position: best.position || 'Talent Acquisition',
+      };
+    }
+  } catch (err) {
+    console.warn(`[finder] Tomba lookup error for ${domain}:`, err.message);
+  }
+  return null;
+}
+
+/**
  * @returns {Promise<{ email: string|null, domain: string|null, name: string|null, method: string }>}
  */
 async function resolveHrEmail({ company, companyDomain }) {
@@ -146,13 +178,25 @@ async function resolveHrEmail({ company, companyDomain }) {
     };
   }
 
-  // 3. Fallback guessing (hr@<domain>) if enabled
-  if (config.finder.fallbackToGuess) {
+  // 3. Try Tomba.io API
+  const tombaMatch = await searchTomba(domain);
+  if (tombaMatch) {
     return {
-      email: `hr@${domain}`,
+      email: tombaMatch.email,
+      domain,
+      name: tombaMatch.name,
+      method: `tomba: ${tombaMatch.position}`,
+    };
+  }
+
+  // 4. Fallback to applicant-facing address (default: careers@<domain>)
+  if (config.finder.fallbackToGuess) {
+    const prefix = config.finder.defaultPrefix || 'careers';
+    return {
+      email: `${prefix}@${domain}`,
       domain,
       name: null,
-      method: companyDomain === domain ? 'llm-domain-guess' : 'guessed-domain',
+      method: companyDomain === domain ? `llm-${prefix}` : `guessed-${prefix}`,
     };
   }
 

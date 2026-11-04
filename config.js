@@ -75,7 +75,10 @@ const config = {
   finder: {
     hunterApiKey: opt('HUNTER_API_KEY'),
     apolloApiKey: opt('APOLLO_API_KEY'),
+    tombaKey: opt('TOMBA_KEY'),
+    tombaSecret: opt('TOMBA_SECRET'),
     fallbackToGuess: bool('FALLBACK_TO_GUESS', true),
+    defaultPrefix: opt('DEFAULT_PREFIX', 'careers'),
   },
 
   subjectTemplate:
