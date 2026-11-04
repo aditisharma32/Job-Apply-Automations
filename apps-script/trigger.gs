@@ -17,8 +17,8 @@
  *        type: Minutes timer → Every 10 minutes
  *   5. Check Executions to confirm it returns 202.
  */
-var SERVICE_URL = 'https://YOUR-SERVICE.onrender.com';
-var POLL_SECRET = 'YOUR_POLL_SECRET';
+var SERVICE_URL = 'https://job-apply-automations.onrender.com';
+var POLL_SECRET = 'b20b1c707f71b5843ba73b071c9320e5a1d686c7698941d9';
 
 function pingPoll() {
   var res = UrlFetchApp.fetch(SERVICE_URL + '/poll', {
