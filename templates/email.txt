@@ -1,20 +1,22 @@
 Hi{{nameComma}}
 
-I recently applied for the {{title}} role at {{company}} and wanted to reach out directly.
+I hope you're doing well.
 
-I'm Harsh Dubey, an AI Engineer and full-stack developer in Bengaluru, currently at EMO Energy building production LLM and IoT-connected apps on GCP. A few highlights:
+I'm a Software Development Engineer with 2+ years of experience building scalable backend APIs, full-stack applications, and AI-powered systems.
 
-- Built Padho AI, a GenAI adaptive learning platform with 1K+ concurrent users, 95% voice transcription accuracy (Deepgram), and real-time voice agents via Vapi AI
-- Custom LLM fine-tuning pipelines, RAG architectures, and GPT-4/Gemini integrations across multiple production apps
-- Cross-platform features end to end (React Native, Next.js, TypeScript)
+My key skills include Python, FastAPI, Node.js, React.js, TypeScript, PostgreSQL, MongoDB, Redis, AWS, Docker, LLMs, RAG, and LangGraph.
 
-Resume: https://drive.google.com/file/d/1WhSde5dMgalOMNVY8vnvD5y57rhBTkXw/view
-Portfolio: https://v0-harsh-dubey-portfolio.vercel.app/
-GitHub: github.com/harshuCodes-git
-LinkedIn: linkedin.com/in/harsharundubey
+I've built production Voice AI systems using Amazon Bedrock and Pipecat, achieving under 500 ms response time.
 
-Would love to be considered for the {{title}} position, or any AI/ML or full-stack role that fits. Happy to share more or jump on a quick call.
+I recently applied for the {{title}} role and would love to explore SDE-1, Backend, or Full-Stack opportunities at {{company}}. I'm available to join immediately.
 
-Best,
-Harsh Dubey
-+91 90961 98302
+Resume: https://drive.google.com/file/d/1iUU4ZzYFAwxTLmaS-LKZm2cCayx5xM6N/view
+LinkedIn: https://www.linkedin.com/in/aditi-sharma-dev/
+GitHub: https://github.com/aditisharma32
+
+Thank you for your time and consideration.
+
+Best regards,
+Aditi Sharma
++91-9079092859
+aditisharma0032@gmail.com
